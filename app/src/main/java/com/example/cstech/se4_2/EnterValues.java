@@ -13,6 +13,7 @@ public class EnterValues extends AppCompatActivity {
     private String ASSIGNED_SYN;
     private DBHelper helper = new DBHelper(this);
     private  WordSynTuple wst;
+    private EditText et_word;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,20 +25,20 @@ public class EnterValues extends AppCompatActivity {
         RECEIVED_WORD = intent.getStringExtra(MainActivity.EXTRA_WORD);
 
         // Capture the layout's PlainText and set the string as its text
-        EditText et_word = (EditText) findViewById(R.id.EditText_word);
+        et_word = (EditText) findViewById(R.id.EditText_word);
         et_word.setText(RECEIVED_WORD);
     }
 
     //Action - Submit
     public void submitNewWord(View view)
     {
-
         EditText et_syn = (EditText) findViewById(R.id.EditText_syn);
         ASSIGNED_SYN = et_syn.getText().toString();
+        RECEIVED_WORD = et_word.getText().toString();
 
         wst = new WordSynTuple(RECEIVED_WORD, ASSIGNED_SYN);
 
-        if(ASSIGNED_SYN.length()!=0 || RECEIVED_WORD.length()!=0)
+        if(ASSIGNED_SYN.length()==0 || RECEIVED_WORD.length()==0)
         {
             Toast error = Toast.makeText(EnterValues.this, "Field is empty, you cannot submit.", Toast.LENGTH_SHORT);
             error.show();
